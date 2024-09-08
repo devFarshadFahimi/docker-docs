@@ -1,0 +1,9 @@
+docker run -d --name local-redis -p 6379:6379 -v /my-redis/:/data -e REDIS_ARGS="--requirepass 123456aA@ --appendonly yes" redis
+
+
+
+// Default username is "default" with password has set below => 123
+docker run -d --name local-redis-stack -p 6379:6379 -p 13333:8001 -e REDIS_ARGS="--requirepass 123" redis/redis-stack:latest
+
+
+docker exec -it 8cd113b45dce /bin/bash

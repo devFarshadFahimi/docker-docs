@@ -1,0 +1,14 @@
+docker network create postgres-net
+-- first step 
+> docker run --net postgres-net --name postgreDb -e POSTGRES_USER=farshad -e POSTGRES_PASSWORD=123456aA -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres:15-alpine
+
+-- second step 
+> docker inspect postgreDb -f "{{json .NetworkSettings.Networks }}" ==> to get connection info 
+
+-- third step => after running below command and seeing container running, connect to posgres database with connection string you get in previous step.
+
+> docker run --net postgres-net --name pgAdmin -p 5050:80 -e 'PGADMIN_DEFAULT_EMAIL=user@domain.com' -e 'PGADMIN_DEFAULT_PASSWORD=123456aA@'  -e 'PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True'   -e 'PGADMIN_CONFIG_CONSOLE_LOG_LEVEL=10' -d dpage/pgadmin4
+
+
+
+                         

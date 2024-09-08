@@ -1,0 +1,5 @@
+docker inspect --format='{{.NetworkSettings.IPAddress}}' --container-name
+
+docker network create --network-name
+
+docker-compose -f /path/to/docker-compose.yml

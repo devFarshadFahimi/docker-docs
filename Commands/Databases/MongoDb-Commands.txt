@@ -1,0 +1,6 @@
+docker network create mongo-net
+
+docker run -d -p 8081:8081 --net mongo-net --restart=always -e ME_CONFIG_MONGODB_ADMINUSERNAME=root -e ME_CONFIG_MONGODB_ADMINUSERNAME=pass -e ME_CONFIG_MONGODB_URL=mongodb://root:pass@mongodb-container:27017/ -e ME_CONFIG_BASICAUTH=false mongo-express
+ 
+
+docker run --name mongodb-container --net mongo-net -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=pass mongo

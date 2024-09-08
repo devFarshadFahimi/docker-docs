@@ -1,0 +1,3 @@
+docker run --name ubuntu-prev --cap-add=NET_ADMIN --cap-add=NET_RAW --privileged -p 2222:22 -p 8000:80 -p 443:443 -it ubuntu-image
+
+docker run --network bridge --name ubuntu-test -it -v ubuntu_volume:/farshad --dns 8.8.8.8 ubuntu

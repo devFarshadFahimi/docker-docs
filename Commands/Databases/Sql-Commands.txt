@@ -1,0 +1,29 @@
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=123456aA@" --shm-size 1g -p 1433:1433 --name db-name --hostname db-namedb -v <host directory>/data:/var/opt/mssql/data -v <host directory>/log:/var/opt/mssql/log -v <host directory>/secrets:/var/opt/mssql/secrets mcr.microsoft.com/mssql/server:2022-latest
+
+
+docker exec -it dockerSql mkdir /var/lib/dockerSqlData/backup
+
+docker cp WideWorldImporters-Full.bak dockerSql:/var/lib/dockerSqlData/backup
+
+
+//Copy files from a container
+//To copy a file out of the container, use the following command:
+
+docker cp <Container ID>:<Container path> <host path>
+docker cp d6b75213ef80:/var/opt/mssql/log/errorlog /tmp/errorlog
+
+
+//Copy files into a container
+//To copy a file into the container, use the following command:
+
+docker cp <Host path> <Container ID>:<Container path>
+docker cp /tmp/mydb.mdf d6b75213ef80:/var/opt/mssql/data
+
+
+
+//Configure the time zone (also you can set it into variable in docker run ( -e 'TZ=America/Los_Angeles' ) )
+https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-configure-time-zone?view=sql-server-ver16
+
+
+// Other details 
+https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-configure?view=sql-server-ver16&pivots=cs1-bash
