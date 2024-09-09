@@ -9,6 +9,8 @@ services:
       ALLOW_ANONYMOUS_LOGIN: 'yes'
     ports:
       - "2181:2181"
+    networks:
+      - kafka-app
 
   kafka1:
     image: bitnami/kafka:latest
@@ -29,6 +31,8 @@ services:
       - "29092:29092"
     volumes:
       - kafka_data1:/bitnami/kafka
+    networks:
+      - kafka-app
 
   kafka2:
     image: bitnami/kafka:latest
@@ -49,7 +53,8 @@ services:
       - "29093:29093"
     volumes:
       - kafka_data2:/bitnami/kafka
-
+    networks:
+      - kafka-app
   kafka3:
     image: bitnami/kafka:latest
     depends_on:
@@ -69,7 +74,9 @@ services:
       - "29094:29094"
     volumes:
       - kafka_data3:/bitnami/kafka
-      
+    networks:
+      - kafka-app
+        
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     depends_on:
@@ -82,6 +89,8 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092,kafka2:9093,kafka3:9094
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    networks:
+      - kafka-app
 
 volumes:
   kafka_data1:
@@ -90,3 +99,7 @@ volumes:
     driver: local
   kafka_data3:
     driver: local
+
+networks:
+  kafka-app:
+    driver: bridge
