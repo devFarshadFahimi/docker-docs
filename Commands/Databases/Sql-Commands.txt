@@ -1,4 +1,4 @@
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=123456aA@" --shm-size 1g -p 1433:1433 --name db-name --hostname db-namedb -v <host directory>/data:/var/opt/mssql/data -v <host directory>/log:/var/opt/mssql/log -v <host directory>/secrets:/var/opt/mssql/secrets mcr.microsoft.com/mssql/server:2022-latest
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=123456aA@" --shm-size 1g -p 1433:1433 --name db-name --hostname db-namedb -v D:/DockerVolums/SqlServer/data:/var/opt/mssql/data -v D:/DockerVolums/SqlServer/log:/var/opt/mssql/log -v D:/DockerVolums/SqlServer/secrets:/var/opt/mssql/secrets mcr.microsoft.com/mssql/server:2022-latest
 
 
 docker exec -it dockerSql mkdir /var/lib/dockerSqlData/backup

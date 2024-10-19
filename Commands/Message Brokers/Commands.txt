@@ -1,4 +1,4 @@
-docker run -d --name test-rabit -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -p 5672:5672 -p 15672:15672 -t rabbitmq:3.13.1-management
+docker run -d --name test-rabit -v D:/DockerVolums/RabbitMQ/lib:/var/lib/rabbitmq -v D:/DockerVolums/RabbitMQ/log:/var/log/rabbitmq -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -p 5672:5672 -p 15672:15672 -t rabbitmq:3.13.1-management
 
 docker run -it --rm --name rabbitmq-stream -p 5552:5552 -p 15672:15672 -p 5672:5672 -e RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS='-rabbitmq_stream advertised_host localhost' rabbitmq:3.13.1-management
 

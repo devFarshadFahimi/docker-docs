@@ -3,3 +3,6 @@ docker inspect --format='{{.NetworkSettings.IPAddress}}' --container-name
 docker network create --network-name
 
 docker-compose -f /path/to/docker-compose.yml
+
+
+docker tag 9609a0173bf2 sql-2022:latest // renaming an image name and tag 
