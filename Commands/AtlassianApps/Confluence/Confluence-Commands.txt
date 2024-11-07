@@ -1,0 +1,12 @@
+# Confluence 
+-- docker file content
+FROM docker.arvancloud.ir/cptactionhank/atlassian-confluence:latest
+USER root
+COPY "atlassian-agent.jar" /opt/atlassian/confluence/
+RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/confluence/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/confluence/bin/setenv.sh
+
+docker build -t custom-confluence:latest .
+
+docker run -v c:/confluence-data:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 custom-confluence:latest
+
+java -jar atlassian-agent.jar -d -m farshad@gmail.com -n BAT -p conf -o http://127.0.0.1  -s BTR8-TFQP-XS31-FA84

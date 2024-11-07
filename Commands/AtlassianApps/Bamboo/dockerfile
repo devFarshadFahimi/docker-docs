@@ -1,0 +1,4 @@
+FROM docker.arvancloud.ir/cptactionhank/atlassian-bamboo:latest
+USER root
+COPY "atlassian-agent.jar" /opt/atlassian/bamboo/
+RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/bamboo/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/bamboo/bin/setenv.sh

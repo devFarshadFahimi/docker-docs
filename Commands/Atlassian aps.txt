@@ -1,0 +1,77 @@
+------------------------------------------------------------Resources------------------------------------------------------------------------------
+
+https://github.com/cptactionhank
+https://virgool.io/@r.beigy/%D9%86%D8%B5%D8%A8-%D9%88-%D9%81%D8%B9%D8%A7%D9%84-%D8%B3%D8%A7%D8%B2%DB%8C-%DA%A9%D9%84%DB%8C%D9%87-%D9%86%D8%B1%D9%85-%D8%A7%D9%81%D8%B2%D8%A7%D8%B1%D9%87%D8%A7%DB%8C-%D8%B4%D8%B1%DA%A9%D8%AA-atlassian-oclfipois9qk
+
+https://github.com/beigi-reza/atlassian-software/blob/main/activateAtlassianSoftware.md
+
+https://github.com/beigi-reza/atlassian-software/blob/main/bamboo-compose.yml
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Atlassian aps
+------------------------------------------------------------------------------------------------------------------------------------------
+
+#jira
+
+FROM docker.arvancloud.ir/cptactionhank/atlassian-jira-software:latest
+USER root
+COPY "atlassian-agent.jar" /opt/atlassian/jira/
+RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/jira/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh
+
+docker build -t custom-jira:latest .
+
+docker run -d --name jira --restart always -p 18009:8080 -e TZ="Asia/Tehran" -m 4096M -v c:/jira-data:/var/atlassian/jira custom-jira:latest 
+
+java -jar atlassian-agent.jar -d -m farshad@gmail.com -n BAT -p jira -o http://127.0.0.1 -s BCB6-160N-U02O-7GY2
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+# Confluence 
+-- docker file content
+FROM docker.arvancloud.ir/cptactionhank/atlassian-confluence:latest
+USER root
+COPY "atlassian-agent.jar" /opt/atlassian/confluence/
+RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/confluence/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/confluence/bin/setenv.sh
+
+docker build -t custom-confluence:latest .
+
+docker run -v c:/confluence-data:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 custom-confluence:latest
+
+java -jar atlassian-agent.jar -d -m farshad@gmail.com -n BAT -p conf -o http://127.0.0.1  -s BCB6-160N-U02O-7GY2
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+# Bamboo
+ 
+-- docker file content
+FROM docker.arvancloud.ir/cptactionhank/atlassian-bamboo:latest
+USER root
+COPY "atlassian-agent.jar" /opt/atlassian/confluence/
+RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/confluence/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/confluence/bin/setenv.sh
+
+docker build -t custom-confluence:latest .
+
+docker run -v c:/confluence-data:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 custom-confluence:latest
+
+java -jar atlassian-agent.jar -d -m farshad@gmail.com -n BAT -p bamboo -o http://127.0.0.1 -s BCSO-YEGI-8KD2-TZMT
+
+
+
+
+---------------------------------------------Not working---------------------------------------------------------------------------------------------
+# fisheye 
+
+-- docker file content
+FROM docker.arvancloud.ir/cptactionhank//fisheye:latest
+USER root
+COPY "atlassian-agent.jar" /opt/atlassian/fisheye/
+RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/fisheye/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/fisheye/bin/setenv.sh
+
+docker build -t custom-fisheye:latest .
+
+docker run -v c:/confluence-data:/var/atlassian/application-data/fisheye --name="fisheye" -d -p 8090:8090 -p 8091:8091 custom-fisheye:latest
+
+java -jar atlassian-agent.jar -d -m farshad@gmail.com -n BAT -p bamboo -o http://127.0.0.1 -s BCSO-YEGI-8KD2-TZMT
+
