@@ -1,6 +1,6 @@
-docker network create postgres-net
+docker network create local-net
 -- first step 
-> docker run --net postgres-net --name postgreDb -e POSTGRES_USER=farshad -e POSTGRES_PASSWORD=123456aA -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres:15-alpine
+> docker run --net local-net --name local-postgres -e POSTGRES_USER=farshad -e POSTGRES_PASSWORD=123456aA -p 5432:5432 -v c:/volumes/postgres:/var/lib/postgresql/data -d --restart always postgres:15-alpine
 
 -- second step 
 > docker inspect postgreDb -f "{{json .NetworkSettings.Networks }}" ==> to get connection info 

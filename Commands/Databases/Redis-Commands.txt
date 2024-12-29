@@ -1,4 +1,4 @@
-docker run -d --name local-redis -p 6379:6379 -v /my-redis/:/data -e REDIS_ARGS="--requirepass 123456aA@ --appendonly yes" redis
+docker run -d --name local-redis --restart always -p 6379:6379 -v /my-redis/:/data -e REDIS_ARGS="--requirepass 123456aA@ --appendonly yes" redis
 
 
 
