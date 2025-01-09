@@ -8,3 +8,13 @@ docker-compose -f /path/to/docker-compose.yml
 docker tag 9609a0173bf2 sql-2022:latest // renaming an image name and tag 
 
 docker load -i <ImageName>
+
+
+
+Windows 10 can sometimes hog ports and sockets preventing us from using them with services like docker.
+
+** Stopping winnat
+To fix this you must temporarily disable the winnat service, this is simply done by running this command (must be run as administrator)
+	> net stop winnat
+Start your docker services and start winnat again
+	> net start winnat
