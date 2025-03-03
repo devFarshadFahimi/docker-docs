@@ -6,9 +6,9 @@ USER root
 COPY "atlassian-agent.jar" /opt/atlassian/jira/
 RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/jira/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh
 
-docker build -t custom-jira:latest .
+docker build -t local-jira:1.0.0 .
 
-docker run -d --name jira --restart always -p 18009:8080 -e TZ="Asia/Tehran" -m 4096M -v c:/jira-data:/var/atlassian/jira custom-jira:latest 
+docker run -d --name local-jira --restart always -p 18009:8080 -e TZ="Asia/Tehran" -m 4096M -v c:/volumes/jira-data:/var/atlassian/jira local-jira:1.0.0 
 
-java -jar atlassian-agent.jar -d -m farshad@gmail.com -n BAT -p jira -o http://127.0.0.1 -s BCB6-160N-U02O-7GY2
+java -jar atlassian-agent.jar -d -m farshad@gmail.com -n BAT -p jira -o http://127.0.0.1 -s B9DK-RDML-0KCG-IN1S
 
