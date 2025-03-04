@@ -3,7 +3,8 @@ version: "3.9"
 services:
   zookeeper:
     image: bitnami/zookeeper:latest
-    tmpfs: "/zktmp"
+    volumes:
+      - c:/volumes/kafka-cluster/zookeeper:/bitnami/zookeeper
     environment:
       ALLOW_ANONYMOUS_LOGIN: 'yes'
     ports:
@@ -17,6 +18,7 @@ services:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 0
+      KAFKA_METADATA_LOG_DIR: /bitnami/kafka/data/meta.properties
       KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CFG_LISTENERS: INTERNAL://:9092,EXTERNAL://0.0.0.0:29092
       KAFKA_CFG_ADVERTISED_LISTENERS: INTERNAL://kafka1:9092,EXTERNAL://localhost:29092
@@ -29,7 +31,7 @@ services:
       - "9092:9092"
       - "29092:29092"
     volumes:
-      - kafka_data1:/bitnami/kafka
+      - c:/volumes/kafka-cluster/kafka1:/bitnami/kafka
     networks:
       - kafka-app
 
@@ -39,6 +41,7 @@ services:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
+      KAFKA_METADATA_LOG_DIR: /bitnami/kafka/data/meta.properties
       KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CFG_LISTENERS: INTERNAL://:9093,EXTERNAL://0.0.0.0:29093
       KAFKA_CFG_ADVERTISED_LISTENERS: INTERNAL://kafka2:9093,EXTERNAL://localhost:29093
@@ -51,7 +54,7 @@ services:
       - "9093:9093"
       - "29093:29093"
     volumes:
-      - kafka_data2:/bitnami/kafka
+      - c:/volumes/kafka-cluster/kafka2:/bitnami/kafka
     networks:
       - kafka-app
   kafka3:
@@ -72,7 +75,7 @@ services:
       - "9094:9094"
       - "29094:29094"
     volumes:
-      - kafka_data3:/bitnami/kafka
+      - c:/volumes/kafka-cluster/kafka3:/bitnami/kafka
     networks:
       - kafka-app
         
@@ -97,6 +100,9 @@ volumes:
   kafka_data2:
     driver: local
   kafka_data3:
+    driver: local
+  zookeeper-data:
+  zookeeper-log:
     driver: local
 
 networks:
