@@ -1,4 +1,4 @@
-FROM sql-server-2022:latest
+FROM mcr.microsoft.com/mssql/server:2022-latest
 
 # Install curl and dependencies
 USER root
