@@ -15,7 +15,7 @@ USE jiradb;
 GO
 
 -- Creates the login AbolrousHazem with password 'mySuperSecretPassword3210'
-CREATE LOGIN jirauser WITH PASSWORD = 'mySuperSecretPassword3210';
+CREATE LOGIN jirauser WITH PASSWORD = '123456aA@';
 GO
 
 -- Creates a database user for the login created above.
