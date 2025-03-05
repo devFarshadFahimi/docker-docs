@@ -16,7 +16,7 @@ services:
       - confluent-apps
 
   dev-local-jira-sql-db:
-    image: sql-server-2022:latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: dev-local-jira-db-host
     restart: always
     environment:
@@ -25,7 +25,8 @@ services:
     ports:
       - "1430:1433"
     volumes:
-      - mssql_data:/var/opt/mssql
+      - c:/volumes/jira/jira-db-data:/var/opt/mssql/data
+      - c:/volumes/jira/jira-db-log:/var/opt/mssql/log
     healthcheck:
       test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "SA", "-P", "123456aA@","-C", "-Q", "SELECT 1"]
       interval: 5s
@@ -35,7 +36,7 @@ services:
       - confluent-apps
 
   dev-local-jira-sql-db-init:
-    image: sql-server-2022:latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     depends_on:
       dev-local-jira-sql-db:
         condition: service_healthy

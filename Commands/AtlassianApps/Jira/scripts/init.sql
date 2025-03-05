@@ -22,7 +22,7 @@ GO
 CREATE USER jirauser FOR LOGIN jirauser;
 GO
 
-CREATE SCHEMA jiraschema;
-GO
+-- CREATE SCHEMA jiraschema;
+-- GO
 
 EXEC sp_addrolemember N'db_owner', N'jirauser'
