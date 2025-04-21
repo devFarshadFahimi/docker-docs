@@ -79,17 +79,33 @@ services:
     networks:
       - kafka-kraft-app
 
+  schema-registry:
+    image: bitnami/schema-registry:latest
+    container_name: schema-registry
+    depends_on:
+      - kafka-0
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_KAFKA_BROKERS: PLAINTEXT://kafka-0:9092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+    networks:
+      - kafka-kraft-app
+
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     depends_on:
       - kafka-0
       - kafka-1
       - kafka-2
+      - schema-registry
     ports:
       - "8080:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
     networks:
       - kafka-kraft-app
 
