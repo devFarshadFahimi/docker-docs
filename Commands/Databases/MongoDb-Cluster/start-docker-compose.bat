@@ -1,4 +1,8 @@
 @echo off
 docker compose up -d
-powershell -ExecutionPolicy Bypass -File AddHosts.ps1
 
+docker exec -it mongo1 mongosh 
+
+
+
+@pause

@@ -1,47 +1,39 @@
 version: "3.9"
-networks:
-  mongoCluster:
 
+name: MongoCluster
 services:
-  mongo1:
-    image: mongo:latest
-    container_name: mongo1
-    networks:
-      - mongoCluster
-    ports:
-      - "27017:27017"
-    command: bash -c "mongod --replSet myReplicaSet --bind_ip localhost,mongo1 & sleep 5 && /scripts/init-replica.sh"
-    # command: mongod --replSet myReplicaSet --bind_ip localhost,mongo1
-    volumes:
-      - mongo1_data:/data/db
-      - ./init-replica.sh:/scripts/init-replica.sh
-    depends_on:
-      - mongo2
-      - mongo3
-      
-  mongo2:
-    image: mongo:latest
-    container_name: mongo2
-    networks:
-      - mongoCluster
-    ports:
-      - "27018:27017"
-    command: mongod --replSet myReplicaSet --bind_ip localhost,mongo2
-    volumes:
-      - mongo2_data:/data/db
+    mongo1:
+        image: mongo:latest
+        container_name: mongo1
+        volumes:
+            - d:/volumes/mongo/node1:/data/db
+        command: mongod --replSet myReplicaSet --bind_ip localhost,mongo1
+        ports:
+            - 27017:27017
+        networks:
+            - mongoCluster
+    mongo2:
+        image: mongo:latest
+        container_name: mongo2
+        volumes:
+            - d:/volumes/mongo/node2:/data/db
+        command: mongod --replSet myReplicaSet --bind_ip localhost,mongo2
+        ports:
+            - 27018:27017
+        networks:
+            - mongoCluster
+    mongo3:
+        image: mongo:latest
+        container_name: mongo3
+        volumes:
+            - d:/volumes/mongo/node3:/data/db
+        command: mongod --replSet myReplicaSet --bind_ip localhost,mongo3
+        ports:
+            - 27019:27017
+        networks:
+            - mongoCluster
 
-  mongo3:
-    image: mongo:latest
-    container_name: mongo3
-    networks:
-      - mongoCluster
-    ports:
-      - "27019:27017"
-    command: mongod --replSet myReplicaSet --bind_ip localhost,mongo3
-    volumes:
-      - mongo3_data:/data/db
-
-volumes:
-  mongo1_data:
-  mongo2_data:
-  mongo3_data:
+networks:
+    mongoCluster:
+        external: true
+        name: mongoCluster
