@@ -1,17 +1,18 @@
 version: "3.9"
 services:
   dev-local-jira:
+    container_name: dev-local-jira
     build:
       context: .
       dockerfile: dockerfile
-    restart: always
+    # restart: always
     ports:
       - "18009:8080"
     environment:
       - TZ=Asia/Tehran
     mem_limit: 4096M
     volumes:
-      - c:/volumes/jira/jira-data:/var/atlassian/jira
+      - d:/volumes/jira/jira-data:/var/atlassian/jira
     networks:
       - confluent-apps
 
@@ -25,8 +26,8 @@ services:
     ports:
       - "1430:1433"
     volumes:
-      - c:/volumes/jira/jira-db-data:/var/opt/mssql/data
-      - c:/volumes/jira/jira-db-log:/var/opt/mssql/log
+      - d:/volumes/jira/jira-db-data:/var/opt/mssql/data
+      - d:/volumes/jira/jira-db-log:/var/opt/mssql/log
     healthcheck:
       test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "SA", "-P", "123456aA@","-C", "-Q", "SELECT 1"]
       interval: 5s
@@ -35,17 +36,17 @@ services:
     networks:
       - confluent-apps
 
-  dev-local-jira-sql-db-init:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    depends_on:
-      dev-local-jira-sql-db:
-        condition: service_healthy
-    volumes:
-      - ./scripts:/scripts
-    entrypoint: ["/bin/sh", "-c", "echo 'SQL Server is ready! Running script...' && /opt/mssql-tools18/bin/sqlcmd -S dev-local-jira-db-host -U SA -P '123456aA@' -C -d master -i /scripts/init.sql"]
-    restart: "no"
-    networks:
-      - confluent-apps
+  # dev-local-jira-sql-db-init:
+  #   image: mcr.microsoft.com/mssql/server:2022-latest
+  #   depends_on:
+  #     dev-local-jira-sql-db:
+  #       condition: service_healthy
+  #   volumes:
+  #     - ./scripts:/scripts
+  #   entrypoint: ["/bin/sh", "-c", "echo 'SQL Server is ready! Running script...' && /opt/mssql-tools18/bin/sqlcmd -S dev-local-jira-db-host -U SA -P '123456aA@' -C -d master -i /scripts/init.sql"]
+  #   restart: "no"
+  #   networks:
+  #     - confluent-apps
 volumes:
   mssql_data:
 
