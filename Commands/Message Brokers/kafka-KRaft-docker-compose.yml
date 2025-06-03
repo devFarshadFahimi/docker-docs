@@ -23,7 +23,7 @@ services:
       - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
       - KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR=2
     volumes:
-      - c:/volumes/kafka-cluster/kafka0:/bitnami/kafka
+      - d:/volumes/kafka-cluster/kafka0:/bitnami/kafka
     networks:
       - kafka-kraft-app
 
@@ -49,7 +49,7 @@ services:
       - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
       - KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR=2
     volumes:
-      - c:/volumes/kafka-cluster/kafka1:/bitnami/kafka
+      - d:/volumes/kafka-cluster/kafka1:/bitnami/kafka
     networks:
       - kafka-kraft-app
 
@@ -75,7 +75,7 @@ services:
       - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
       - KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR=2
     volumes:
-      - c:/volumes/kafka-cluster/kafka2:/bitnami/kafka
+      - d:/volumes/kafka-cluster/kafka2:/bitnami/kafka
     networks:
       - kafka-kraft-app
 
