@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  baget:
+    image: loicsharma/baget:latest
+    container_name: baget
+    restart: always
+    environment:
+      - Storage__Type=FileSystem
+      - Storage__Path=/var/baget/packages
+      - Database__Type=Sqlite
+      - Database__ConnectionString=Data Source=/var/baget/baget.db
+      - Search__Type=Database
+      - ApiKey=8KuXweOWCMweDtSm16ZitN3g1MLNIBluEseDtSm16ZitN3
+      - AllowPackageOverwrites=true
+      - PackageDeletionBehavior=HardDelete
+      - Mirror__Enabled=true
+    # env_file:
+    #   - ./baget.env
+    volumes:
+      - D:/volumes/baget-data/:/var/baget
+      - D:/volumes/baget-data/nuget-packages:/var/baget/packages
+    ports:
+      - 5000:80

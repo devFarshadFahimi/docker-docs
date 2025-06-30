@@ -1,0 +1,32 @@
+step-0: Create a baget.env file with below information 
+
+ApiKey=NUGET-SERVER-API-KEY
+
+Storage__Type=FileSystem
+Storage__Path=/var/baget/packages
+Database__Type=Sqlite
+Database__ConnectionString=Data Source=/var/baget/baget.db
+Search__Type=Database
+
+
+
+Step-1:
+docker run -d --name nuget-server -p 5000:80 --env-file baget.env -v "D:/volumes/baget-data/:/var/baget" loicsharma/baget:latest
+
+Step-2: Create a Nuget.Config with below config
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="LocalBaGet" value="http://localhost:5000/v3/index.json" allowInsecureConnections="true"/>
+  </packageSources>
+</configuration>
+
+
+Step-3:
+dotnet nuget add source http://localhost:5000/v3/index.json --name LocalBaGet
+dotnet nuget update source LocalBaGet --configfile NuGet.Config --store-password-in-clear-text
+
+
+Step-4:
+
+dotnet nuget push -s LocalBaGet -k NUGET-SERVER-API-KEY --skip-duplicate package.0.0.3.nupkg
