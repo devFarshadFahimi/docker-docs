@@ -1,6 +1,6 @@
 docker network create local-net
 -- first step 
-> docker run --net local-net --name local-postgres -e POSTGRES_USER=farshad -e POSTGRES_PASSWORD=123456aA -p 5432:5432 -v c:/volumes/postgres:/var/lib/postgresql/data -d --restart always postgres:15-alpine
+> docker run --net local-net --name local-postgres -e POSTGRES_USER=farshad -e POSTGRES_PASSWORD=123456aA -e POSTGRES_DB=sample -p 5432:5432 -v c:/volumes/postgres:/var/lib/postgresql/data -d --restart always postgres:17.5
 
 -- second step 
 > docker inspect postgreDb -f "{{json .NetworkSettings.Networks }}" ==> to get connection info 
@@ -11,4 +11,15 @@ docker network create local-net
 
 
 
+> docker run --net postgres-net --name pgAdmin -p 5080:8080 -e PGADMIN_DEFAULT_EMAIL=user@domain.com -e PGADMIN_DEFAULT_PASSWORD=123456aA@ -e PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True -e PGADMIN_LISTEN_PORT=8080 -e PGADMIN_CONFIG_CONSOLE_LOG_LEVEL=10 -d elestio/pgadmin:REL-9_5
                          
+        image: elestio/pgadmin:${SOFTWARE_VERSION_TAG}
+        restart: always
+        environment:
+        PGADMIN_DEFAULT_EMAIL: ${ADMIN_EMAIL}
+        PGADMIN_DEFAULT_PASSWORD: ${ADMIN_PASSWORD}
+        PGADMIN_LISTEN_PORT: 8080
+        ports:
+        - "172.17.0.1:8080:8080"
+        volumes:
+        - ./servers.json:/pgadmin4/servers.json
