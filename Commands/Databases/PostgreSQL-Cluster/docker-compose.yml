@@ -1,7 +1,7 @@
 version: '3.8'
 x-postgres-common:
   &postgres-common
-  image: postgres:17.5
+  image: postgres:latest
   user: postgres
   restart: always
   healthcheck:
