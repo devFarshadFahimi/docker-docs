@@ -1,0 +1,32 @@
+name: single-node-postgres
+services:
+    postgres:
+        networks:
+            - postgres-net
+        container_name: local-postgres
+        environment:
+          POSTGRES_USER: sa
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: 123456aA@
+        ports:
+            - 5432:5432
+        volumes:
+            - d:/volumes/postgres:/var/lib/postgresql/data
+        restart: always
+        image: postgres:latest
+    pgadmin4:
+        restart: always
+        networks:
+            - postgres-net
+        container_name: pgAdmin
+        ports:
+            - 5050:80
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=user@domain.com
+            - PGADMIN_DEFAULT_PASSWORD=123456aA@
+            - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True
+            - PGADMIN_CONFIG_CONSOLE_LOG_LEVEL=10
+        image: dpage/pgadmin4
+networks:
+    postgres-net:
+        driver: bridge
